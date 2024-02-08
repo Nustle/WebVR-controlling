@@ -1,0 +1,52 @@
+{
+  "name": "webvr",
+  "productName": "Web-ориентировонная система реабилитации конечностей",
+  "version": "1.0.0",
+  "description": "Клиентское приложение для взаимодействия с webvr сценой",
+  "main": "main.js",
+  "license": "MIT",
+  "homepage": "",
+  "author": "adilcka <hustle.adik69@yandex.ru> (https://iu9.bmstu.ru)",
+  "scripts": {
+    "start": "electron ",
+    "build": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^27.0.0",
+    "electron-builder": "^24.6.4"
+  },
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "python-shell": "^5.0.0",
+    "ws": "^8.14.2"
+  },
+  "build": {
+    "appId": "webVR",
+    "productName": "webVR",
+    "artifactName": "${productName}.${ext}",
+    "mac": {
+      "target": "dmg",
+      "icon": "img/webvr.icns"
+    },
+    "win": {
+      "target": [
+        "portable"
+      ],
+      "icon": "img/webvr.ico"
+    },
+    "linux": {
+      "target": "deb",
+      "icon": "img/webvr.png"
+    },
+    "files": [
+      "python/build",
+      "main.js",
+      "child.js",
+      "html/**/*",
+      "css/**/*",
+      "img/**/*"
+    ],
+    "asar": false,
+    "extraResources": "python/build"
+  }
+}

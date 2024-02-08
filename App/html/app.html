@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <title>Запуск веб приложения</title>
+  <link rel="stylesheet" href="../css/app.css"/>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="app.html">Приложение</a>
+    <a href="about.html">О нас</a>
+    <a href="rules.html">Правила использования</a>
+  </nav>
+  <div id="buttons">
+    <div class="center">
+      <button class="glow-on-hover" id="start-button" type="button" onclick="startClient()">
+        <span class="text-button">Начать</span>
+      </button>
+    </div>
+    <div class="center">
+      <button class="glow-on-hover" id="end-button" type="button" onclick="stopClient()">
+        <span class="text-button">Завершить</span>
+      </button>
+    </div>
+  </div>
+  <script type="text/javascript" src="../child.js"></script>
+</body>
+</html>
