@@ -85,18 +85,16 @@ document.addEventListener('DOMContentLoaded', function () {
                         entity.setAttribute('id', 'parent_id' + i);
                         entity.setAttribute('position', newPos);
 
-                        var sphere = document.createElement('a-sphere');
-                        sphere.setAttribute('radius', '0.075');
-                        sphere.setAttribute('color', '#483D8B');
-                        sphere.setAttribute('position', '0 0 0');
+                        var object = document.createElement('a-box');
+                        object.setAttribute('color', '#483D8B');
+                        object.setAttribute('position', '0 0 0');
 
                         var text = document.createElement('a-text');
                         text.setAttribute('id', 'text_id' + i);
                         text.setAttribute('value', 'id=' + i + ' (' + parseInt(data['x' + i], 10) + ',' + parseInt(data['y' + i], 10) + ',' + parseInt(data['z' + i], 10) + ')');
-                        text.setAttribute('color', '#FFFFFF');
                         text.setAttribute('position', '0.125 0 0');
 
-                        entity.appendChild(sphere);
+                        entity.appendChild(object);
                         entity.appendChild(text);
 
                         scene.appendChild(entity);
@@ -105,86 +103,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (flag) {
                         document.getElementById('box_' + index).setAttribute('animation', 'property: position; to: ' + position.x + ' ' + position.y + ' ' + position.z + '')
                     }
-                    
+
                 }
             }
         }
     }
-
-    function createBox() {
-        var boxEl;
-        if (selectedShape === 'box') {
-            boxEl = document.createElement('a-box');
-            boxEl.setAttribute('material', {
-                color: '#0ebeff'
-            });
-        } else if (selectedShape === 'sphere') {
-            boxEl = document.createElement('a-sphere');
-            boxEl.setAttribute('material', {
-                color: '#ae63e4'
-            });
-            boxEl.setAttribute('radius', 0.5);
-        }
-        boxEl.setAttribute('position', position);
-        boxEl.setAttribute('id', 'box_' + box_id);
-        scene.appendChild(boxEl);
-
-        boxes['box_' + box_id] = [position.x, position.y, position.z];
-        box_id = box_id + 1;
-        console.log(boxes);
-    }
-
-    function selectBox() {
-        var mas = [position.x, position.y, position.z];
-
-        for (var i = 0; i < box_id; i++) {
-            selected = true;
-            for (var j = 0; j < 3; j++) {
-                if (boxes['box_' + i][j] >= mas[j] + 0.5 || boxes['box_' + i][j] <= mas[j] - 0.5) {
-                    selected = false;
-                }
-            }
-
-            if (selected) {
-                index = i;
-                break;
-            }
-        }
-
-        if (index !== -1) {
-            flag = true;
-            console.log(flag);
-            console.log(index);
-        }
-    }
-
-    function updateBox() {
-        boxes['box_' + index] = [position.x, position.y, position.z];
-        flag = false;
-        index = -1;
-    }
-
-    document.addEventListener('keydown', function (event) {
-        if (event.code === 'Digit1') {
-            selectedShape = 'box';
-            console.log('Selected shape: Box');
-        } else if (event.code === 'Digit2') {
-            selectedShape = 'sphere';
-            console.log('Selected shape: Sphere');
-        }
-
-        if (event.code === 'Space') {
-            createBox()
-        }
-
-        if (event.code === 'KeyQ') {
-            selectBox()
-        }
-
-        if (event.code === 'KeyE') {
-            updateBox()
-        }
-    });
 
     function screenSurf(shift) {
         var plane = document.getElementById('screen');
