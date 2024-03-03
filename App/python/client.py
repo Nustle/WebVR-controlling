@@ -14,6 +14,11 @@ palm_standard_vert = 100.03117166580984
 z_standard = 50
 hor_standard_palm = 6
 vert_standard_palm = 8
+status = ""
+
+x_tek = 0
+y_tek = 0
+z_tek = 0
 
 global is_calibrated
 
@@ -75,7 +80,6 @@ def main():
                 palm_hor = (((x[17] - x[5]) * image_width) ** 2 + ((y[17] - y[5]) * image_height) ** 2) ** 0.5
 
                 if not is_calibrated:
-
                     # относительно размеров изображения
                     p_vert = ((x[9] - x[0]) ** 2 + (y[9] - y[0]) ** 2) ** 0.5
                     p_hor = ((x[17] - x[5]) ** 2 + (y[17] - y[5]) ** 2) ** 0.5
@@ -92,15 +96,34 @@ def main():
                         print("Farther")
                         continue
 
-                if palm_vert >= palm_hor:
-                    z_tek = palm_standard_vert * z_standard / palm_vert
-                    pix = vert_standard_palm / palm_vert
-                else:
-                    z_tek = palm_standard_hor * z_standard / palm_hor
-                    pix = hor_standard_palm / palm_hor
+                    if palm_vert >= palm_hor:
+                        z_tek = palm_standard_vert * z_standard / palm_vert
+                        pix = vert_standard_palm / palm_vert
+                    else:
+                        z_tek = palm_standard_hor * z_standard / palm_hor
+                        pix = hor_standard_palm / palm_hor
 
-                x_tek = pix * x[8] * image_width
-                y_tek = pix * y[8] * image_height
+                    x_tek = pix * x[8] * image_width
+                    y_tek = pix * y[8] * image_height
+
+                if len(x) == 21:
+                    hor_0_8 = (x[8] - x[0]) * image_width
+                    hor_0_12 = (x[12] - x[0]) * image_width
+                    hor_0_4 = (x[4] - x[0]) * image_width
+
+
+                    if hor_0_4 > palm_vert:
+                        print("Right")
+                        x_tek += hor_standard_palm / 2
+                        status = "right"
+                    elif -1 * hor_0_4 > palm_vert:
+                        print("Left")
+                        x_tek -= hor_standard_palm / 2
+                        status = "left"
+                    else:
+                        print("Not")
+                        status = ""
+
 
                 payload = {
                     'x8': int(x_tek),
